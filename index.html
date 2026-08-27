@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patrick Dion — Technicien en soutien informatique</title>
+<meta name="description" content="Portfolio de Patrick Dion, étudiant en soutien informatique (DEP) — projets réseau, virtualisation et sécurité.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0E1826;
+    --bg-2: #0A121D;
+    --surface: #142235;
+    --surface-2: #182842;
+    --line: #26405F;
+    --line-soft: rgba(95, 143, 191, 0.18);
+    --text: #E7EDF5;
+    --text-dim: #9FB2C9;
+    --text-faint: #64798F;
+    --amber: #E8A33D;
+    --teal: #5FB8AC;
+    --teal-dim: #3D7F76;
+    --red-dot: #E0664F;
+    --green-dot: #5FB88A;
+    --radius: 3px;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --display: 'Space Grotesk', sans-serif;
+    --body: 'Inter', sans-serif;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  html{ scroll-behavior: smooth; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  }
+
+  body{
+    background: var(--bg);
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size: 48px 48px;
+    background-attachment: fixed;
+    color: var(--text);
+    font-family: var(--body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a{ color: var(--teal); text-decoration: none; }
+  a:hover{ color: var(--amber); }
+  a:focus-visible, button:focus-visible{
+    outline: 2px solid var(--amber);
+    outline-offset: 3px;
+  }
+
+  .wrap{ max-width: 980px; margin: 0 auto; padding: 0 28px; }
+
+  .mono{ font-family: var(--mono); }
+  .eyebrow{
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .eyebrow::before{
+    content: "";
+    width: 18px;
+    height: 1px;
+    background: var(--teal-dim);
+  }
+
+  /* ---------- NAV ---------- */
+  header.site-nav{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(10, 18, 29, 0.86);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner{
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 16px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .nav-id{
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-id .dot{
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--green-dot);
+    box-shadow: 0 0 8px rgba(95,184,138,0.7);
+  }
+  nav.links{ display: flex; gap: 28px; }
+  nav.links a{
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text-dim);
+    letter-spacing: 0.02em;
+  }
+  nav.links a:hover{ color: var(--amber); }
+  .nav-toggle{ display:none; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding: 108px 0 96px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after{
+    content: "";
+    position: absolute;
+    right: -120px; top: -80px;
+    width: 420px; height: 420px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    opacity: 0.5;
+  }
+  .hero::before{
+    content: "";
+    position: absolute;
+    right: -40px; top: 40px;
+    width: 300px; height: 300px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    opacity: 0.5;
+  }
+  .hero h1{
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(38px, 6vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    max-width: 780px;
+  }
+  .hero h1 .accent{ color: var(--amber); }
+  .hero .role{
+    font-family: var(--mono);
+    color: var(--text-dim);
+    font-size: 16px;
+    margin-top: 18px;
+  }
+  .hero p.lede{
+    max-width: 560px;
+    margin-top: 22px;
+    color: var(--text-dim);
+    font-size: 17px;
+  }
+  .hero-cta{
+    display: flex;
+    gap: 14px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+  }
+  .btn{
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    padding: 12px 20px;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+  }
+  .btn-primary{
+    background: var(--amber);
+    color: var(--bg-2);
+    border-color: var(--amber);
+    font-weight: 600;
+  }
+  .btn-primary:hover{ background: #f0b458; color: var(--bg-2); }
+  .btn-ghost{ color: var(--text); }
+  .btn-ghost:hover{ border-color: var(--teal); color: var(--teal); }
+
+  /* status strip */
+  .status-strip{
+    margin-top: 56px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .status-cell{
+    flex: 1 1 160px;
+    padding: 14px 18px;
+    border-right: 1px solid var(--line);
+    background: var(--surface);
+  }
+  .status-cell:last-child{ border-right: none; }
+  .status-cell .label{
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-faint);
+  }
+  .status-cell .value{
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--text);
+    margin-top: 4px;
+  }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{ padding: 88px 0; border-bottom: 1px solid var(--line); }
+  section:last-of-type{ border-bottom: none; }
+  h2.section-title{
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(26px, 3.4vw, 34px);
+    margin-bottom: 40px;
+    max-width: 620px;
+  }
+
+  /* ---------- À PROPOS ---------- */
+  .about-grid{
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 56px;
+  }
+  .about-grid p{ color: var(--text-dim); margin-bottom: 16px; }
+  .about-grid p strong{ color: var(--text); font-weight: 600; }
+  .fact-list{
+    border-left: 1px solid var(--line);
+    padding-left: 24px;
+  }
+  .fact{ margin-bottom: 22px; }
+  .fact .k{
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--teal);
+  }
+  .fact .v{ font-size: 15px; margin-top: 4px; color: var(--text); }
+
+  /* ---------- COMPÉTENCES ---------- */
+  .skills-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .skill-card{
+    background: var(--surface);
+    padding: 26px 28px;
+  }
+  .skill-card .cat{
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--amber);
+    letter-spacing: 0.04em;
+    margin-bottom: 12px;
+  }
+  .skill-card ul{ list-style: none; }
+  .skill-card li{
+    font-size: 14.5px;
+    color: var(--text-dim);
+    padding: 5px 0;
+    display: flex;
+    gap: 10px;
+  }
+  .skill-card li::before{
+    content: "▸";
+    color: var(--teal-dim);
+    flex-shrink: 0;
+  }
+
+  /* ---------- PROJETS ---------- */
+  .project{
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    margin-bottom: 28px;
+    background: var(--surface);
+    overflow: hidden;
+  }
+  .project-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 26px 28px 20px;
+    border-bottom: 1px solid var(--line);
+    flex-wrap: wrap;
+  }
+  .project-head h3{
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 600;
+  }
+  .project-head .sub{
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--text-faint);
+    margin-top: 6px;
+  }
+  .project-tags{ display: flex; gap: 8px; flex-wrap: wrap; }
+  .tag{
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 4px 9px;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    color: var(--text-dim);
+  }
+  .project-body{ padding: 22px 28px 28px; }
+  .project-body p{ color: var(--text-dim); font-size: 15px; max-width: 640px; }
+  .project-links{ margin-top: 18px; display: flex; gap: 20px; }
+  .project-links a{ font-family: var(--mono); font-size: 13px; }
+
+  /* rack diagram — signature element */
+  .rack{
+    margin-top: 24px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--bg-2);
+    padding: 4px;
+  }
+  .rack-unit{
+    display: grid;
+    grid-template-columns: 28px 1fr auto;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--line-soft);
+    font-family: var(--mono);
+    font-size: 12.5px;
+  }
+  .rack-unit:last-child{ border-bottom: none; }
+  .rack-dot{
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--green-dot);
+    box-shadow: 0 0 6px rgba(95,184,138,0.6);
+    justify-self: center;
+  }
+  .rack-name{ color: var(--text); }
+  .rack-name .role{ color: var(--text-faint); display: block; font-size: 11px; margin-top: 2px; }
+  .rack-ip{ color: var(--text-faint); text-align: right; white-space: nowrap; }
+
+  /* ---------- CERTIFICATIONS ---------- */
+  .cert-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .cert-row:last-child{ border-bottom: none; }
+  .cert-row .cname{ font-family: var(--display); font-size: 18px; font-weight: 600; }
+  .cert-row .cissuer{ font-family: var(--mono); font-size: 12.5px; color: var(--text-faint); margin-top: 4px; }
+  .cert-badge{
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--bg-2);
+    background: var(--teal);
+    padding: 5px 10px;
+    border-radius: 2px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  .contact-block{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+  .contact-block h2{
+    font-family: var(--display);
+    font-size: clamp(30px, 4vw, 42px);
+    font-weight: 700;
+    max-width: 520px;
+  }
+  .contact-links{ display: flex; flex-direction: column; gap: 10px; }
+  .contact-links a{
+    font-family: var(--mono);
+    font-size: 15px;
+    color: var(--text);
+  }
+  .contact-links a:hover{ color: var(--amber); }
+  .contact-links .k{ color: var(--text-faint); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  footer{
+    padding: 32px 0 48px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-faint);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  /* ---------- REVEAL ---------- */
+  .reveal{ opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.in{ opacity: 1; transform: translateY(0); }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 760px){
+    nav.links{ display: none; }
+    .about-grid{ grid-template-columns: 1fr; gap: 32px; }
+    .skills-grid{ grid-template-columns: 1fr; }
+    .status-strip{ flex-direction: column; }
+    .status-cell{ border-right: none; border-bottom: 1px solid var(--line); }
+    .status-cell:last-child{ border-bottom: none; }
+    .contact-block{ flex-direction: column; align-items: flex-start; }
+    .rack-unit{ grid-template-columns: 20px 1fr; }
+    .rack-ip{ grid-column: 1 / -1; text-align: left; padding-left: 34px; margin-top: -6px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <div class="nav-id"><span class="dot"></span>patrick@portfolio</div>
+    <nav class="links">
+      <a href="#about">à propos</a>
+      <a href="#skills">compétences</a>
+      <a href="#projects">projets</a>
+      <a href="#certs">certifications</a>
+      <a href="#contact">contact</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="eyebrow">soutien informatique · DEP 2025–2027</div>
+    <h1>Patrick Dion construit des systèmes qui <span class="accent">tiennent debout</span> — et qui se réparent quand ils tombent.</h1>
+    <div class="role">Technicien en soutien informatique, étudiant</div>
+    <p class="lede">
+      En formation à l'École hôtelière et d'administration de Laval, je combine les bases enseignées en classe
+      avec un laboratoire personnel où j'apprends en cassant des choses — puis en comprenant pourquoi.
+    </p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="cv.pdf" download>↓ Télécharger mon CV</a>
+      <a class="btn btn-ghost" href="#projects">Voir mes projets</a>
+      <a class="btn btn-ghost" href="https://github.com/pdion-tech" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+
+    <div class="status-strip">
+      <div class="status-cell">
+        <div class="label">Formation</div>
+        <div class="value">DEP soutien info · 2025–2027</div>
+      </div>
+      <div class="status-cell">
+        <div class="label">Certification</div>
+        <div class="value">Google Cybersecurity</div>
+      </div>
+      <div class="status-cell">
+        <div class="label">Disponibilité</div>
+        <div class="value">Stage — avril à mi-juin</div>
+      </div>
+      <div class="status-cell">
+        <div class="label">Secteur visé</div>
+        <div class="value">Commission scolaire</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="eyebrow">à propos</div>
+    <h2 class="section-title">Deux horaires à temps plein, une seule direction</h2>
+    <div class="about-grid">
+      <div>
+        <p>
+          Je termine actuellement mon DEP en soutien informatique tout en travaillant à temps plein.
+          Ce n'est pas le chemin le plus court vers le domaine, mais c'est celui qui m'a appris à
+          <strong>prioriser, documenter et rester calme sous pression</strong> — des réflexes qui
+          servent autant en support technique qu'ailleurs.
+        </p>
+        <p>
+          En dehors des cours, je maintiens un laboratoire personnel : serveur de virtualisation,
+          services réseau, accès à distance sécurisé. Rien de tout ça n'était exigé par le programme —
+          je le fais parce que comprendre un système en le montant soi-même reste la meilleure façon
+          de vraiment le comprendre.
+        </p>
+        <p>
+          Ce que je cherche : un stage en soutien informatique dans une commission scolaire, où je peux
+          mettre cette curiosité au service d'un environnement qui compte vraiment pour les gens qui l'utilisent.
+        </p>
+      </div>
+      <div class="fact-list">
+        <div class="fact">
+          <div class="k">Formation</div>
+          <div class="v">DEP Soutien informatique<br>École hôtelière et d'administration de Laval</div>
+        </div>
+        <div class="fact">
+          <div class="k">Régions ciblées</div>
+          <div class="v">CSS des Laurentides, CSS de Laval</div>
+        </div>
+        <div class="fact">
+          <div class="k">Approche</div>
+          <div class="v">Apprentissage par la pratique — je monte, je casse, je répare, je documente</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="eyebrow">compétences</div>
+    <h2 class="section-title">Ce que je sais faire, classé comme un technicien le ferait</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="cat">01 · Systèmes</div>
+        <ul>
+          <li>Windows 10 / 11 — installation et configuration</li>
+          <li>Administration Linux (Ubuntu Server)</li>
+          <li>Virtualisation avec Proxmox VE</li>
+          <li>Diagnostic et résolution de pannes</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <div class="cat">02 · Réseau</div>
+        <ul>
+          <li>TCP/IP, DNS, DHCP</li>
+          <li>Configuration de routeurs et pare-feu domestiques</li>
+          <li>Filtrage DNS (Pi-hole, Unbound)</li>
+          <li>Accès distant sécurisé (Tailscale / VPN maillé)</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <div class="cat">03 · Sécurité</div>
+        <ul>
+          <li>Principes fondamentaux — certifié Google Cybersecurity</li>
+          <li>Gestion de mots de passe self-hosted</li>
+          <li>Certificats TLS et chiffrement en transit</li>
+          <li>Bonnes pratiques d'accès et de segmentation</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <div class="cat">04 · Outils</div>
+        <ul>
+          <li>Docker et Docker Compose</li>
+          <li>Ligne de commande Linux (bash)</li>
+          <li>Git / GitHub</li>
+          <li>Documentation technique claire et suivie</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="eyebrow">projets</div>
+    <h2 class="section-title">Des systèmes réels, pas des exercices</h2>
+
+    <div class="project">
+      <div class="project-head">
+        <div>
+          <h3>Laboratoire d'infrastructure personnel</h3>
+          <div class="sub">Mini-PC · Proxmox VE 9 · en fonction depuis août 2026</div>
+        </div>
+        <div class="project-tags">
+          <span class="tag">Proxmox</span>
+          <span class="tag">Docker</span>
+          <span class="tag">DNS</span>
+          <span class="tag">VPN</span>
+        </div>
+      </div>
+      <div class="project-body">
+        <p>
+          Serveur de virtualisation monté sur un ancien poste de travail, avec deux disques séparés —
+          un pour l'hyperviseur, un dédié aux machines virtuelles. Objectif : reproduire, à petite échelle,
+          les décisions qu'un technicien prend dans un vrai parc informatique.
+        </p>
+        <div class="rack">
+          <div class="rack-unit">
+            <span class="rack-dot"></span>
+            <span class="rack-name">Pi-hole + Unbound<span class="role">Filtrage DNS pour tout le réseau domestique</span></span>
+            <span class="rack-ip">LXC · 512 Mo</span>
+          </div>
+          <div class="rack-unit">
+            <span class="rack-dot"></span>
+            <span class="rack-name">Ubuntu Server 26.04<span class="role">Docker, hébergement de services</span></span>
+            <span class="rack-ip">VM · 4 vCPU</span>
+          </div>
+          <div class="rack-unit">
+            <span class="rack-dot"></span>
+            <span class="rack-name">Vaultwarden<span class="role">Gestionnaire de mots de passe self-hosted, HTTPS</span></span>
+            <span class="rack-ip">Docker</span>
+          </div>
+          <div class="rack-unit">
+            <span class="rack-dot"></span>
+            <span class="rack-name">Windows 11 Pro<span class="role">Poste client virtualisé, TPM 2.0 virtuel</span></span>
+            <span class="rack-ip">VM · 8 Go RAM</span>
+          </div>
+          <div class="rack-unit">
+            <span class="rack-dot"></span>
+            <span class="rack-name">Tailscale<span class="role">Accès distant chiffré à l'ensemble du lab</span></span>
+            <span class="rack-ip">Réseau maillé</span>
+          </div>
+        </div>
+        <p style="margin-top:18px; font-size: 13.5px;">
+          Chaque service a été monté, cassé et redébogué au moins une fois — les erreurs de configuration
+          font partie de la documentation autant que le résultat final.
+        </p>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <div>
+          <h3>Site web professionnel — clinique de naturopathie</h3>
+          <div class="sub">HTML / CSS · projet réel pour une professionnelle</div>
+        </div>
+        <div class="project-tags">
+          <span class="tag">Web</span>
+          <span class="tag">Client réel</span>
+        </div>
+      </div>
+      <div class="project-body">
+        <p>
+          Conçu et livré pour une naturopathe qui avait besoin d'une présence en ligne simple et professionnelle
+          pour sa clientèle. Vraies contraintes, vrai utilisateur final, vraies allers-retours de révision —
+          l'expérience la plus proche d'un mandat client que j'aie eue avant un stage.
+        </p>
+        <div class="project-links">
+          <a href="#" target="_blank" rel="noopener">Voir le site ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="certs">
+    <div class="eyebrow">certifications</div>
+    <h2 class="section-title">Formation complémentaire</h2>
+    <div class="cert-row">
+      <div>
+        <div class="cname">Google Cybersecurity Certificate</div>
+        <div class="cissuer">Google · décembre 2025</div>
+      </div>
+      <span class="cert-badge">complété</span>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="eyebrow">contact</div>
+    <div class="contact-block">
+      <h2>Disponible pour un stage d'avril à mi-juin.</h2>
+      <div class="contact-links">
+        <div>
+          <div class="k">Courriel</div>
+          <a href="mailto:patrickdion34@gmail.com">patrickdion34@gmail.com</a>
+        </div>
+        <div>
+          <div class="k">GitHub</div>
+          <a href="https://github.com/pdion-tech" target="_blank" rel="noopener">github.com/pdion-tech</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>Patrick Dion — Technicien en soutien informatique</span>
+    <span>Construit à la main, hébergé sur GitHub Pages</span>
+  </div>
+</footer>
+
+<script>
+  const els = document.querySelectorAll('section, .project');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); } });
+  }, { threshold: 0.08 });
+  els.forEach(el => { el.classList.add('reveal'); io.observe(el); });
+</script>
+
+</body>
+</html>
