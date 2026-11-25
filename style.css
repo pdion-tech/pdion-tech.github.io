@@ -1,0 +1,599 @@
+/* =========================================
+   1. VARIABLES & CONFIGURATION
+   Couleurs, polices, rayons de bordure
+   ========================================= */
+:root{
+  --bg: #0E1826;
+  --bg-2: #0A121D;
+  --surface: #142235;
+  --surface-2: #182842;
+  --line: #26405F;
+  --line-soft: rgba(95, 143, 191, 0.18);
+  --text: #E7EDF5;
+  --text-dim: #9FB2C9;
+  --text-faint: #64798F;
+  --amber: #E8A33D;
+  --teal: #5FB8AC;
+  --teal-dim: #3D7F76;
+  --red-dot: #E0664F;
+  --green-dot: #5FB88A;
+  --radius: 3px;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+  --display: 'Space Grotesk', sans-serif;
+  --body: 'Inter', sans-serif;
+}
+
+
+/* =========================================
+   2. RESET & STYLES GLOBAUX
+   Base du document, body, liens
+   ========================================= */
+*{ box-sizing: border-box; margin:0; padding:0; }
+html{ scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+  *{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+
+body{
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body);  
+  line-height: 1.6;          
+  
+}
+
+a{ color: var(--teal); text-decoration: none; }
+a:hover{ color: var(--amber); }
+a:focus-visible, button:focus-visible{
+  outline: 2px solid var(--amber);
+  outline-offset: 3px;
+}
+
+
+/* =========================================
+   3. CONTENEUR PRINCIPAL
+   Limite la largeur du contenu
+   ========================================= */
+.wrap{ max-width: 980px; margin: 0 auto; padding: 0 28px; }
+
+
+/* =========================================
+   4. ÉLÉMENTS RÉUTILISABLES
+   Classes utilisées partout (.mono, .eyebrow)
+   ========================================= */
+.mono{ font-family: var(--mono); }
+
+.eyebrow{
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.eyebrow::before{
+  content: "";
+  width: 18px;
+  height: 1px;
+  background: var(--teal-dim);
+}
+
+
+/* =========================================
+   5. NAVIGATION (HEADER)
+   Menu fixe en haut de page
+   ========================================= */
+header.site-nav{
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(10, 18, 29, 0.86);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav-inner{
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 16px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-id{
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-id .dot{
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--green-dot);
+  box-shadow: 0 0 8px rgba(95,184,138,0.7);
+}
+
+nav.links{ display: flex; gap: 28px; }
+
+nav.links a{
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--text-dim);
+  letter-spacing: 0.02em;
+}
+
+nav.links a:hover{ color: var(--amber); }
+
+.nav-toggle{
+  display: none;              /* caché sur grand écran ;  media query le passe à flex */
+  flex-direction: column;     /* empile les 3 barres verticalement */
+  justify-content: center;
+  gap: 5px;                   /* espace entre les barres */
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  background: none;           /* enlève le style gris par défaut du <button> */
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.nav-toggle span{
+  display: block;             /* un <span> est "inline" : sans ça, width/height sont ignorés */
+  width: 100%;
+  height: 2px;
+  background: var(--text);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+/* Animation ☰ → ✕ quand ton JS ajoute .active */
+.nav-toggle.active span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+.nav-toggle.active span:nth-child(2){ opacity: 0; }
+.nav-toggle.active span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+
+/* =========================================
+   6. SECTION HERO (ACCUEIL)
+   Grande section d'introduction
+   ========================================= */
+.hero{
+  padding: 108px 0 96px;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after{
+  content: "";
+  position: absolute;
+  right: -120px; top: -80px;
+  width: 420px; height: 420px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+.hero::before{
+  content: "";
+  position: absolute;
+  right: -40px; top: 40px;
+  width: 300px; height: 300px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+.hero h1{
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(38px, 6vw, 64px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  max-width: 780px;
+}
+
+.hero h1 .accent{ color: var(--amber); }
+
+.hero .role{
+  font-family: var(--mono);
+  color: var(--text-dim);
+  font-size: 16px;
+  margin-top: 18px;
+}
+
+.hero p.lede{
+  max-width: 560px;
+  margin-top: 22px;
+  color: var(--text-dim);
+  font-size: 17px;
+}
+
+.hero-cta{
+  display: flex;
+  gap: 14px;
+  margin-top: 36px;
+  flex-wrap: wrap;
+}
+
+
+/* =========================================
+   7. BOUTONS
+   Styles des boutons (primaire, fantôme)
+   ========================================= */
+.btn{
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  padding: 12px 20px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+
+.btn-primary{
+  background: var(--amber);
+  color: var(--bg-2);
+  border-color: var(--amber);
+  font-weight: 600;
+}
+
+.btn-primary:hover{ background: #f0b458; color: var(--bg-2); }
+
+.btn-ghost{ color: var(--text); }
+
+.btn-ghost:hover{ border-color: var(--teal); color: var(--teal); }
+
+
+/* =========================================
+   8. BANDEAU DE STATUT
+   Informations rapides sous le hero
+   ========================================= */
+.status-strip{
+  margin-top: 56px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.status-cell{
+  flex: 1 1 160px;
+  padding: 14px 18px;
+  border-right: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.status-cell:last-child{ border-right: none; }
+
+.status-cell .label{
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-faint);
+}
+
+.status-cell .value{
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--text);
+  margin-top: 4px;
+}
+
+
+/* =========================================
+   9. STRUCTURE DES SECTIONS
+   Espacement et titres des sections
+   ========================================= */
+section{ padding: 88px 0; border-bottom: 1px solid var(--line); }
+section:last-of-type{ border-bottom: none; }
+
+h2.section-title{
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(26px, 3.4vw, 34px);
+  margin-bottom: 40px;
+  max-width: 620px;
+}
+
+
+/* =========================================
+   10. SECTION À PROPOS
+   Présentation et faits rapides
+   ========================================= */
+.about-grid{
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 56px;
+}
+
+.about-grid p{ color: var(--text-dim); margin-bottom: 16px; }
+.about-grid p strong{ color: var(--text); font-weight: 600; }
+
+.fact-list{
+  border-left: 1px solid var(--line);
+  padding-left: 24px;
+}
+
+.fact{ margin-bottom: 22px; }
+
+.fact .k{
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--teal);
+}
+
+.fact .v{ font-size: 15px; margin-top: 4px; color: var(--text); }
+
+
+/* =========================================
+   11. SECTION COMPÉTENCES
+   Grille des compétences techniques
+   ========================================= */
+.skills-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.skill-card{
+  background: var(--surface);
+  padding: 26px 28px;
+}
+
+.skill-card .cat{
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--amber);
+  letter-spacing: 0.04em;
+  margin-bottom: 12px;
+}
+
+.skill-card ul{ list-style: none; }
+
+.skill-card li{
+  font-size: 14.5px;
+  color: var(--text-dim);
+  padding: 5px 0;
+  display: flex;
+  gap: 10px;
+}
+
+.skill-card li::before{
+  content: "▸";
+  color: var(--teal-dim);
+  flex-shrink: 0;
+}
+
+
+/* =========================================
+   12. SECTION PROJETS
+   Cartes de projets et détails
+   ========================================= */
+.project{
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin-bottom: 28px;
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.project-head{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 26px 28px 20px;
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+
+.project-head h3{
+  font-family: var(--display);
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.project-head .sub{
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--text-faint);
+  margin-top: 6px;
+}
+
+.project-tags{ display: flex; gap: 8px; flex-wrap: wrap; }
+
+.tag{
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 4px 9px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  color: var(--text-dim);
+}
+
+.project-body{ padding: 22px 28px 28px; }
+.project-body p{ color: var(--text-dim); font-size: 15px; max-width: 640px; }
+.project-body p.project-note{ margin-top: 18px; font-size: 13.5px; }
+.project-links{ margin-top: 18px; display: flex; gap: 20px; }
+.project-links a{ font-family: var(--mono); font-size: 13px; }
+
+
+/* =========================================
+   13. DIAGRAMME RACK (PROJET SPÉCIAL)
+   Visualisation du laboratoire personnel
+   ========================================= */
+.rack{
+  margin-top: 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-2);
+  padding: 4px;
+}
+
+.rack-unit{
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line-soft);
+  font-family: var(--mono);
+  font-size: 12.5px;
+}
+
+.rack-unit:last-child{ border-bottom: none; }
+
+.rack-dot{
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--green-dot);
+  box-shadow: 0 0 6px rgba(95,184,138,0.6);
+  justify-self: center;
+}
+
+.rack-name{ color: var(--text); }
+.rack-name .role{ color: var(--text-faint); display: block; font-size: 11px; margin-top: 2px; }
+.rack-ip{ color: var(--text-faint); text-align: right; white-space: nowrap; }
+
+
+/* =========================================
+   14. SECTION CERTIFICATIONS
+   Liste des certifications obtenues
+   ========================================= */
+.cert-row{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.cert-row:last-child{ border-bottom: none; }
+
+.cert-row .cname{ font-family: var(--display); font-size: 18px; font-weight: 600; }
+.cert-row .cissuer{ font-family: var(--mono); font-size: 12.5px; color: var(--text-faint); margin-top: 4px; }
+
+.cert-badge{
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--bg-2);
+  background: var(--teal);
+  padding: 5px 10px;
+  border-radius: 2px;
+  letter-spacing: 0.04em;
+}
+
+
+/* =========================================
+   15. SECTION CONTACT & FOOTER
+   Informations de contact et bas de page
+   ========================================= */
+.contact-block{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 32px;
+}
+
+.contact-block h2{
+  font-family: var(--display);
+  font-size: clamp(30px, 4vw, 42px);
+  font-weight: 700;
+  max-width: 520px;
+}
+
+.contact-links{ display: flex; flex-direction: column; gap: 10px; }
+
+.contact-links a{
+  font-family: var(--mono);
+  font-size: 15px;
+  color: var(--text);
+}
+
+.contact-links a:hover{ color: var(--amber); }
+
+.contact-links .k{ color: var(--text-faint); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; }
+
+footer{
+  padding: 32px 0 48px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-faint);
+}
+
+.footer-inner{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+
+/* =========================================
+   16. ANIMATIONS D'APPARITION
+   Effet de révélation au défilement
+   ========================================= */
+.reveal{ opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.in{ opacity: 1; transform: translateY(0); }
+
+
+/* =========================================
+   17. RESPONSIVE (MOBILE)
+   Adaptation pour écrans < 760px
+   ========================================= */
+@media (max-width: 760px){
+  
+  /* 1. Afficher le bouton hamburger sur mobile */
+  .nav-toggle{ display: flex; }
+  
+  /* 2. Cacher le menu par défaut, et le positionner en tiroir */
+  nav.links{
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(10, 18, 29, 0.98);
+    backdrop-filter: blur(8px);
+    flex-direction: column;
+    padding: 20px 28px;
+    gap: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  
+  /* 3. Afficher le menu quand la classe .active est présente */
+  nav.links.active{
+    display: flex;
+  }
+  
+  /* reste de tes règles responsive */
+  .about-grid{ grid-template-columns: 1fr; gap: 32px; }
+  .skills-grid{ grid-template-columns: 1fr; }
+  .status-strip{ flex-direction: column; }
+  .status-cell{ border-right: none; border-bottom: 1px solid var(--line); }
+  .status-cell:last-child{ border-bottom: none; }
+  .contact-block{ flex-direction: column; align-items: flex-start; }
+  .rack-unit{ grid-template-columns: 20px 1fr; }
+  .rack-ip{ grid-column: 1 / -1; text-align: left; padding-left: 34px; margin-top: -6px; }
+}
